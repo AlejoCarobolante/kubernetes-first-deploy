@@ -4,6 +4,13 @@ Sigue estos pasos para levantar el proyecto en tu máquina local usando Minikube
 
 ### 1. Prerrequisitos
 Tener instalado Docker y Minikube.
+
+Para instalar Minikube con Chocolatey:
+
+```bash
+choco install minikube
+```
+
 Si es tu primera vez, inicia el cluster con el driver de Docker:
 
 ```bash
@@ -31,10 +38,7 @@ Aplica los archivos de configuración para crear el Deployment, el Service y el 
 ```bash
 
 # Aplicar la configuración del Deployment y Servicio
-kubectl apply -f k8s-todo.yaml
-
-# Aplicar la configuración del Ingress (Reglas de ruteo)
-kubectl apply -f ingress.yaml
+kubectl apply -f todo-k8s.yaml
 
 ```
 ### 5. Exponer el Cluster (Necesario en Windows/Mac)
