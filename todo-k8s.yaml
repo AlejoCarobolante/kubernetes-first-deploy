@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hola-mundo-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hola-mundo
+  template:
+    metadata:
+      labels:
+        app: hola-mundo
+    spec:
+      containers:
+      - name: contenedor-nginx
+        image: mickey-mouse:v1       
+        imagePullPolicy: Never     
+        ports:
+        - containerPort: 80
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: hola-mundo-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: hola-mundo
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 80
+
+---
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: hola-mundo-ingress
+spec:
+  rules:
+  - host: mickey.local
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: hola-mundo-service
+            port:
+              number: 8080
