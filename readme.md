@@ -60,3 +60,52 @@ Linux/Mac: /etc/hosts
 ```
 ### 7. Probar
 Abre tu navegador y visita: http://mickey.local
+
+## 🔄 Automatización del Desarrollo (Dev Loop)
+
+Para evitar ejecutar manualmente los comandos de build y deploy con cada cambio, este repositorio incluye dos formas de automatizar el flujo de trabajo.
+
+### Opción 1: Script de PowerShell (Sencillo)
+Este script (`deploy.ps1`) automatiza la construcción de la imagen, la carga en Minikube y el reinicio de los Pods.
+
+**Uso:**
+Simplemente ejecuta el script desde la raíz del proyecto cada vez que quieras actualizar tus cambios:
+
+```bash
+./deploy.ps1
+```
+*Nota*: Si tienes problemas de permisos para ejecutar scripts, puedes necesitar correr esto en PowerShell como Administrador: Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process
+
+### Opción 2: Skaffold (Avanzado / Hot Reload)
+Skaffold observa tus archivos y detecta cambios en tiempo real. Cuando guardas un archivo, Skaffold automáticamente reconstruye la imagen y actualiza el cluster.
+
+#### 1. Instalación
+Si usas Windows y tienes Chocolatey, instala Skaffold con un solo comando:
+
+```bash
+choco install -y skaffold
+```
+(También puedes descargar el ejecutable directamente desde su web oficial).
+
+#### 2. Ejecución
+Para iniciar el modo de desarrollo continuo (Hot Reload):
+
+```bash
+skaffold dev
+
+# La terminal se quedará "escuchando". Prueba cambiar algo en tu index.html y guarda el archivo; verás cómo se actualiza automáticamente en el navegador sin tocar nada más.
+```
+
+```bash
+skaffold build
+
+# Skaffold construye los artefactos (no se queda escuchando).
+```
+
+```bash
+skaffold run
+
+# Skaffold construye los artefactos y deployea la app.
+```
+
+Para detenerlo, simplemente presiona Ctrl + C en la terminal (esto también limpiará los recursos creados por Skaffold).
