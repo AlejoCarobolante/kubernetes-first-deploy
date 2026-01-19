@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: contenedor-nginx
-        image: mickey-mouse:v1       
+        image: mickey-mouse:latest       
         imagePullPolicy: Never     
         ports:
         - containerPort: 80
