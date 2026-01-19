@@ -41,6 +41,7 @@ kind: Ingress
 metadata:
   name: hola-mundo-ingress
 spec:
+  ingressClassName: nginx
   rules:
   - host: mickey.local
     http:
